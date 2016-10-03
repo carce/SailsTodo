@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TODO Mafuka</title>
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" media="screen" charset="utf-8">
+    <style media="screen">
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+      display: none !important;
+    }
+    .done {
+      font-size: 1.8rem;
+      color: grey;
+      text-decoration: line-through;
+    }
+    .task {
+      padding: 0.5rem 0;
+      font-size: 2rem;
+    }
+    .task-list {
+      margin-top: 30px;
+    }
+    .header {
+      height: 34px;
+      text-align: right;
+      padding: 8px 0;
+    }
+    .header input {
+      margin-left: 1rem;
+    }
+    </style>
+    <script src="js/dependencies/angular.min.js" charset="utf-8"></script>
+    <script src="js/app.js" charset="utf-8"></script>
+  </head>
+  <body ng-controller="TodoController">
+    <nav class="navbar navbar-default">
+      <div class="container">
+            <span class="navbar-brand">TODO Mafuka</span>
+            <form class="form-inline header pull-right" ng-submit="logOut()" ng-show="loggedIn && shouldShow">
+              <input type="submit" value="Logout" class="btn btn-danger">
+            </form>
+            <form class="form-inline header pull-right" ng-submit="archive()" ng-show="loggedIn && shouldShow">
+              <input type="submit" value="Archive" class="btn btn-warning">
+            </form>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <form class="form-horizontal" ng-submit="logIn()" method="post" ng-hide="loggedIn || !shouldShow">
+            <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">Username:</label>
+              <div class="col-sm-10">
+                <input type="text" name="username" ng-model="username" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-sm-2 control-label">Password:</label>
+              <div class="col-sm-10">
+                <input type="password" name="password" ng-model="password" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <input type="submit" value="JUST DO IT!!!" class="btn btn-success pull-right">
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <form class="" ng-submit="addTask()" method="post" ng-show="loggedIn && shouldShow">
+            <div class="row">
+              <div class="col-xs-8">
+                <input type="text" ng-model="taskText" class="form-control">
+              </div>
+              <div class="col-xs-4">
+                <input type="submit" value="Add one" class="btn btn-default pull-right">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row task-list" ng-show="loggedIn && shouldShow">
+        <div class="col-md-6 col-md-offset-3" ng-show="tasksExist">
+          <!-- <div ng-repeat="task in tasks | filter:{done: false}"> -->
+          <div class="task" ng-repeat="task in tasks | orderBy: 'done': false">
+            <span ng-class="{done: task.done}">{{task.text}}</span>
+            <input class="pull-right" type="checkbox" ng-model="task.done" ng-change="updateTask(task.id, task.done)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
