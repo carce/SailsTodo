@@ -10,8 +10,7 @@ module.exports = {
 	login: function(req, res) {
 		passport.authenticate('local', function(err, user, info) {
 			if (err || !user) {
-				res.status(403);
-				return res.send("Ovaj ti ne radi");
+				return res.send(403, "Ovaj ti ne radi");
 			}
 			if (user) {
 				req.login(user, function(err) {

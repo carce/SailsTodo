@@ -16,7 +16,7 @@ module.exports = {
 
     password: {
       type: 'string',
-      required: true,
+      // required: true,
       minLength: 6
     },
 

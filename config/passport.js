@@ -4,16 +4,15 @@ var passport = require('passport'),
   bcrypt = require('bcryptjs');
 
 passport.serializeUser(function(user, done) {
-  console.log('serial: ' + user);
-    done(null, user);
+  console.log('serial: ' + user.username);
+  return done(null, user.username);
 });
 
 passport.deserializeUser(function(username, done) {
-    console.log('des: ' + user);
-    // User.findOne({ username: username } , function (err, user) {
-    //     done(err, user);
-    // });
-    done(null, username);
+    console.log('des: ' + username);
+    User.findOne({ username: username } , function (err, user) {
+        return done(err, user);
+    });
 });
 
 passport.use(new GoogleStrategy({
@@ -23,7 +22,7 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log('DOES IT EVEN GO HERE?');
-    User.findOrCreate({ username: profile.id, password: "test123" }, function (err, user) {
+    User.findOrCreate({ username: profile.id }, function (err, user) {
       return cb(err, user);
     });
   }
@@ -34,8 +33,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
   User.findOne( {username: username}, function (err, user) {
     if (err) return done(err);
     if (!user) return done(null, false);
-    // if (user.password != password) return done(null, false);
-    // return done(null, user);
     bcrypt.compare(password, user.password, function (err, res) {
       if (err) return done(err);
       if(!res) return done(null, false);

@@ -9,7 +9,7 @@ module.exports = {
 	deleteDone: function (req, res) {
 		Task.destroy({done: true}).exec(function (err) {
 			if (err) {
-				res.send(500, 'Something died...');
+				return res.send(500, 'Something died...');
 			}
 			return res.ok();
 		})

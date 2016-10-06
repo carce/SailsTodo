@@ -31,10 +31,9 @@ module.exports = {
 			req.login(user, function (err) {
 				console.log("SO ARE WE ALL THE WAY");
 				if (err) {
-					// console.log(err);
-					res.send('404', 'wow');
+					return res.send('404', 'wow');
 				} else {
-					res.ok();
+					return res.redirect('/');
 				}
 			});
 		})(req, res);
