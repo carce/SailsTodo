@@ -18,13 +18,18 @@ passport.deserializeUser(function(username, done) {
 passport.use(new GoogleStrategy({
     clientID: '208876614799-jp2l41kbg7vdd5g37arnorfcpo6kibtl.apps.googleusercontent.com',
     clientSecret: '29SQvqe6VMlq8xo2-DtnNsfw',
-    callbackURL: "http://127.0.0.1:1337/google/back"
+    // callbackURL: "http://127.0.0.1:1337/google/back"
+    callbackURL: "http://80d449ca.ngrok.io/google/back"
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log('DOES IT EVEN GO HERE?');
-    User.findOrCreate({ username: profile.id }, function (err, user) {
-      return cb(err, user);
+    console.log(profile);
+    User.findOrCreate({ username: profile.id }, {username: profile.id, name: profile.displayName}, function (err, user) {
+      console.log(user);
+      console.log(profile.id);
+      cb(err, user);
     });
+    // cb(null, profile);
   }
 ));
 

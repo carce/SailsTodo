@@ -2,8 +2,9 @@
 <html ng-app="app">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TODO Mafuka</title>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>TODO</title>
     <link rel="stylesheet" href="/styles/bootstrap.min.css" media="screen" charset="utf-8">
     <style media="screen">
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -17,6 +18,10 @@
     .task {
       padding: 0.5rem 0;
       font-size: 2rem;
+    }
+    .task .user {
+      font-size: 1.5rem;
+      color: #888;
     }
     .task-list {
       margin-top: 30px;
@@ -36,7 +41,7 @@
   <body ng-controller="TodoController">
     <nav class="navbar navbar-default">
       <div class="container">
-            <span class="navbar-brand">TODO Mafuka</span>
+            <span class="navbar-brand">TODO</span>
             <form class="form-inline header pull-right" ng-submit="logOut()" ng-show="loggedIn && shouldShow">
               <input type="submit" value="Logout" class="btn btn-danger">
             </form>
@@ -68,7 +73,8 @@
             </div>
             <div class="form-group">
               <div class="col-sm-12">
-                <input type="submit" value="JUST DO IT!!!" class="btn btn-success pull-right">
+                <button ng-click="register()" class="btn btn-warning pull-right" style="margin-left: 1rem;">SAMO REGISTER</button>
+                <input type="submit" value="JUST LOGIN" class="btn btn-success pull-right">
               </div>
             </div>
           </form>
@@ -98,6 +104,7 @@
           <!-- <div ng-repeat="task in tasks | filter:{done: false}"> -->
           <div class="task" ng-repeat="task in tasks | orderBy: 'done': false">
             <span ng-class="{done: task.done}">{{task.text}}</span>
+            <span class="user">({{task.user.username}})</span>
             <input class="pull-right" type="checkbox" ng-model="task.done" ng-change="updateTask(task.id, task.done)">
           </div>
         </div>

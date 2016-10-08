@@ -8,6 +8,21 @@ app.controller('TodoController', function($scope, $http, $timeout, $filter) {
 
   loadIt();
 
+  $scope.register = function() {
+    $http({
+      method: 'post',
+      url: '/user',
+      data: {
+        username: $scope.username,
+        password: $scope.password
+      }
+    }).then(function() {
+      $scope.logIn();
+    }, function() {
+      console.log('NECE REGISTRACIJA');
+    });
+  };
+
   $scope.logIn = function() {
     $http({
       method: 'post',
@@ -80,6 +95,10 @@ app.controller('TodoController', function($scope, $http, $timeout, $filter) {
       if ($scope.loggedIn != true) $scope.loggedIn = true;
       $scope.tasks = res.data;
       $scope.tasksExist = true;
+
+      for (var i = 0; i < $scope.tasks.length; i++) {
+        if ($scope.tasks[i].user.name) $scope.tasks[i].user.username = $scope.tasks[i].user.name;
+      }
     }, function() {
       console.log('Fucked up somewhere or logged out');
       $scope.loggedIn = false;

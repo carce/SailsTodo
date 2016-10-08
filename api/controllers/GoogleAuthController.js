@@ -10,7 +10,7 @@
 module.exports = {
 	try: function (req, res, next) {
 		console.log(next);
-		passport.authenticate('google', {scope: ['profile', 'email']}, function (err, user) {
+		passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.me']}, function (err, user) {
 			console.log("KURAC A");
 			req.logIn(user, function (err) {
         if(err) {

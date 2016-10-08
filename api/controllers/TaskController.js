@@ -13,5 +13,14 @@ module.exports = {
 			}
 			return res.ok();
 		})
+	},
+
+	create: function (req, res) {
+		var newTask = req.allParams();
+		newTask.user = req.user.id;
+		console.log(newTask);
+		Task.create(newTask).exec(function (err, task) {
+			return res.json(task);
+		});
 	}
 };

@@ -15,9 +15,9 @@ module.exports = {
     },
 
     password: {
-      type: 'string',
+      type: 'string'
       // required: true,
-      minLength: 6
+      // minLength: 6
     },
 
     toJSON: function() {
@@ -28,16 +28,21 @@ module.exports = {
   },
 
   beforeCreate: function(user, cb) {
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(user.password, salt, function(err, hash) {
-        if (err) {
-          console.log(err);
-          cb(err);
-        } else {
-          user.password = hash;
-          cb();
-        }
+    if (user.password) {
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(user.password, salt, function(err, hash) {
+          if (err) {
+            console.log(err);
+            cb(err);
+          } else {
+            user.password = hash;
+            cb();
+          }
+        });
       });
-    });
+    }
+    else {
+      cb();
+    }
   }
 };

@@ -15,6 +15,9 @@ module.exports = {
     done: {
       type: 'boolean',
       defaultsTo: false
+    },
+    user: {
+      model: 'user'
     }
   }
 };
